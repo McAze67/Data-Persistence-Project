@@ -24,12 +24,7 @@ public class MenuUI : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+   
     void SavePlayerName(string newName)
     {
         noNameText.SetActive(false);

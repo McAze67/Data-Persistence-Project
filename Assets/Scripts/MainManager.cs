@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -21,7 +20,7 @@ public class MainManager : MonoBehaviour
     private int highScore;
     private string highScoreName;
 
-    private bool m_GameOver = false;
+    private bool m_GameOver;
 
     // MIGRATED: InputAction replaces Input.GetKeyDown(KeyCode.Space)
     private InputAction m_LaunchAction;
@@ -34,7 +33,7 @@ public class MainManager : MonoBehaviour
         highScore = PersistData.Instance.highScore;
         highScoreName = PersistData.Instance.highScoreName;
         Debug.Log($"New Player Name: {newPlayerName}");
-        HighScoreText.text = $"High Score : {highScore}" + $"  From :  {highScoreName}";
+        HighScoreText.text = $"High Score : {highScore}" + $"  Name :  {highScoreName}";
     }
 
     // MIGRATED: enable the action while the component is active
@@ -105,7 +104,7 @@ public class MainManager : MonoBehaviour
         GameOverText.SetActive(true);
     }
 
-    public void HighScore(int score)
+    void HighScore(int score)
     {
         if (score > highScore)
         {
