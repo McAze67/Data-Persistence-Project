@@ -13,9 +13,13 @@ public class MainManager : MonoBehaviour
 
     public Text ScoreText;
     public GameObject GameOverText;
-
+    public Text HighScoreText;
     private bool m_Started = false;
     private int m_Points;
+
+    private string newPlayerName;
+    private int highScore;
+    private string highScoreName;
 
     private bool m_GameOver = false;
 
@@ -26,6 +30,11 @@ public class MainManager : MonoBehaviour
     void Awake()
     {
         m_LaunchAction = new InputAction("Launch", InputActionType.Button, "<Keyboard>/space");
+        newPlayerName = PersistData.Instance.PlayerName;
+        highScore = PersistData.Instance.highScore;
+        highScoreName = PersistData.Instance.highScoreName;
+        Debug.Log($"New Player Name: {newPlayerName}");
+        HighScoreText.text = $"High Score : {highScore}" + $"  From :  {highScoreName}";
     }
 
     // MIGRATED: enable the action while the component is active
@@ -76,6 +85,7 @@ public class MainManager : MonoBehaviour
         }
         else if (m_GameOver)
         {
+            HighScore(m_Points);
             if (m_LaunchAction.WasPressedThisFrame()) // MIGRATED: was Input.GetKeyDown(KeyCode.Space)
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -93,5 +103,21 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+    }
+
+    public void HighScore(int score)
+    {
+        if (score > highScore)
+        {
+            highScore = score;
+            highScoreName = newPlayerName;
+            PersistData.Instance.highScoreName = newPlayerName;
+            PersistData.Instance.highScore = score;
+        }
+    }
+
+    public void BackMainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }
